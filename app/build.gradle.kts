@@ -53,7 +53,6 @@ android {
 dependencies {
 
     //glide
-
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -78,4 +77,6 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
     //icons
     implementation ("com.google.android.gms:play-services-oss-licenses:17.0.1")
+    //splash screen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }
