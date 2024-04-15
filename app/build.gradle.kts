@@ -79,4 +79,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-oss-licenses:17.0.1")
     //splash screen
     implementation ("androidx.core:core-splashscreen:1.0.1")
+    //admob
+    implementation ("com.google.android.gms:play-services-ads:23.0.0")
+
 }

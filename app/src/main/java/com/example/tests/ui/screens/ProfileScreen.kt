@@ -3,6 +3,7 @@ package com.example.tests.ui.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -46,19 +48,18 @@ import androidx.compose.ui.unit.sp
 import com.example.tests.R
 import com.example.tests.data.Game
 
-@Preview
+@Preview(locale = "en")
 @Composable
 fun ProfileScreen() {
     val scoreFromCurrentLevel = 0
     val score = 8
-    val scoreToNextLevel = 10;
+    val scoreToNextLevel = 10
     val progress:Float = (score-scoreFromCurrentLevel)/(scoreToNextLevel-scoreFromCurrentLevel).toFloat()
 
     val colors = MaterialTheme.colorScheme
     val brush = Brush.verticalGradient(listOf(colors.background, colors.primary))
 
     val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
     val screenWidth = configuration.screenWidthDp
 
     val level = 1
@@ -122,6 +123,7 @@ fun ProfileScreen() {
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Absolute.Left,
                     modifier = Modifier.padding(12.dp)
                 ) {
                     Column(
@@ -152,6 +154,7 @@ fun ProfileScreen() {
                         //x and o
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Absolute.Left,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxSize(0.7f)
@@ -235,7 +238,8 @@ fun ProfileScreen() {
                                 .clip(RoundedCornerShape(20.dp)),
                             color = colors.secondary,
                             trackColor = Color.DarkGray,
-                            progress = progress
+                            progress = { progress },
+                            strokeCap = StrokeCap.Round,
                         )
                         Text(
                             text = "Level: $level",
@@ -244,7 +248,10 @@ fun ProfileScreen() {
                             fontWeight = FontWeight.SemiBold
                         )
                     }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
+                        ) {
                         //stars from this level
                         Box(
                             modifier = Modifier
@@ -252,7 +259,9 @@ fun ProfileScreen() {
                                 .weight(1f),
                             contentAlignment = Alignment.CenterStart
                         ) {
-                            Row {
+                            Row(
+                                horizontalArrangement = Arrangement.Absolute.Left
+                            ) {
                                 Text(
                                     text = scoreFromCurrentLevel.toString(),
                                     fontSize = 20.sp,
@@ -272,7 +281,9 @@ fun ProfileScreen() {
                                 .weight(1f),
                             contentAlignment = Alignment.CenterEnd
                         ) {
-                            Row {
+                            Row(
+                                horizontalArrangement = Arrangement.Absolute.Left
+                                ) {
                                 Text(
                                     text = scoreToNextLevel.toString(),
                                     fontSize = 20.sp,
@@ -300,7 +311,10 @@ fun ProfileScreen() {
             ) {
                 Spacer(modifier = Modifier.height(60.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    horizontalArrangement = Arrangement.Absolute.Left,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = "Last games",
                         fontSize = 15.sp,
@@ -327,7 +341,8 @@ fun ProfileScreen() {
                     LazyVerticalGrid(
                         columns = GridCells.Adaptive(minSize = (screenWidth * 0.4).dp),
                         modifier = Modifier
-                            .height(screenWidth.dp)
+                            .height(screenWidth.dp),
+                        horizontalArrangement = Arrangement.Absolute.Left
                     ) {
                         items(games.take(4)) {
                             ShowGame(
@@ -369,7 +384,10 @@ fun ShowGame(modifier: Modifier, game: Game, colorScheme: ColorScheme, name: Str
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 //players' names
-                Row(modifier = Modifier.weight(1f)) {
+                Row(
+                    horizontalArrangement = Arrangement.Absolute.Left,
+                    modifier = Modifier.weight(1f)
+                ) {
                     //player 1 name
                     Box(
                         contentAlignment = Alignment.Center,
@@ -402,7 +420,10 @@ fun ShowGame(modifier: Modifier, game: Game, colorScheme: ColorScheme, name: Str
                     }
                 }
                 //players' score
-                Row(modifier = Modifier.weight(1f)) {
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.Absolute.Left
+                    ) {
                     //player 1 score
                     Box(
                         contentAlignment = Alignment.Center,
@@ -455,7 +476,7 @@ fun ShowGame(modifier: Modifier, game: Game, colorScheme: ColorScheme, name: Str
                         .clip(RoundedCornerShape(20.dp)),
                     color = color,
                     trackColor = color,
-                    progress = 1f
+                    progress = { 1f }
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }

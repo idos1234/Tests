@@ -27,14 +27,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.tests.R
 
 
+@Preview
 @Composable
-fun SearchGame(navController: NavHostController) {
+fun SearchGame(navController: NavHostController = NavHostController(LocalContext.current)) {
     BackHandler {
         navController.navigateUp()
     }
@@ -68,7 +71,7 @@ fun SearchGame(navController: NavHostController) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.Center),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Absolute.Left
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.cloud),

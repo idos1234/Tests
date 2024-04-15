@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Preview
-@Composable()
+@Composable
 fun HomeScreen(navController: NavController = NavController(LocalContext.current)) {
     val configuration = LocalConfiguration.current
 
@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavController = NavController(LocalContext.current
         Spacer(modifier = Modifier.fillMaxHeight(0.2f))
 
         //the buttons
-        Box(modifier = Modifier.fillMaxHeight(0.4f)) {
+        Box(modifier = Modifier.fillMaxHeight(0.45f)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -69,7 +69,9 @@ fun HomeScreen(navController: NavController = NavController(LocalContext.current
             ) {
                 //training games button
                 Button(
-                    onClick = {},
+                    onClick = {
+                              navController.navigate("GameScreen")
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(0.5f)
@@ -84,7 +86,7 @@ fun HomeScreen(navController: NavController = NavController(LocalContext.current
                     )
                 }
 
-                Spacer(modifier = Modifier.fillMaxHeight(0.2f))
+                Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
                 //online game button
                 Button(
@@ -96,9 +98,29 @@ fun HomeScreen(navController: NavController = NavController(LocalContext.current
                     colors = ButtonDefaults.buttonColors(containerColor = colors.primary)
                 ) {
                     Text(
-                        text = "Online",
+                        text = "Play",
                         style = type.bodyMedium,
                         fontSize = screenHeight.value.sp*0.03,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.onPrimary
+                    )
+                }
+
+                Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+
+                //online game button
+                Button(
+                    onClick = {navController.navigate("FriendlyOnlineGame")},
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(0.5f)
+                        .fillMaxHeight(0.4f),
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.primary)
+                ) {
+                    Text(
+                        text = "Friendly battle",
+                        style = type.bodyMedium,
+                        fontSize = screenHeight.value.sp*0.025,
                         fontWeight = FontWeight.SemiBold,
                         color = colors.onPrimary
                     )

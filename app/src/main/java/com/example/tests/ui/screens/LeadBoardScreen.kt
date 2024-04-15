@@ -118,17 +118,31 @@ fun ShowPlayer(player: Player, modifier: Modifier, index: Int, colorScheme: Colo
         colors = CardDefaults.cardColors(containerColor = color),
         shape = RoundedCornerShape(20.dp)
     ) {
-        Row(modifier = Modifier.padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(horizontal = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.Left
+        ) {
             Box(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.CenterStart
             ) {
-                Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Absolute.Left
+                ) {
                     Text(
-                        "$index.",
+                        "$index",
                         fontSize = screenHeight.value.sp*0.02,
                         fontWeight = FontWeight.Light,
-                        color = Color.Black,
+                        color = Color.Black
+                    )
+                    Text(
+                        ".",
+                        fontSize = screenHeight.value.sp*0.02,
+                        fontWeight = FontWeight.Light,
+                        color = Color.Black
                     )
                     Image(
                         imageVector = Icons.Default.AccountCircle,

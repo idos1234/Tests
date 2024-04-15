@@ -10,9 +10,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.Icon
@@ -27,11 +31,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.tests.ui.screens.Game.CreateOrJoinGame
+import com.example.tests.ui.screens.Game.GameScreen
 import com.example.tests.ui.screens.Game.SearchGame
 import com.example.tests.ui.screens.HomeScreen
 import com.example.tests.ui.screens.LeadBoardScreen
@@ -67,17 +74,39 @@ class MainActivity : ComponentActivity() {
                         profileColor
                     )
                 }
+                val backTopAppBar = @Composable {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        horizontalArrangement = Arrangement.Absolute.Left
+                        ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.clickable(
+                                onClick = { navController.popBackStack() }
+                            )
+                        )
+                    }
+                }
 
                 var bottomAppBar: @Composable () -> Unit by remember {
                     mutableStateOf(defaultBottomBar)
                 }
+                var topAppBar: @Composable () -> Unit by remember {
+                    mutableStateOf({})
+                }
 
                 Scaffold(
                     bottomBar = bottomAppBar,
+                    topBar = topAppBar
                 ) {
                     NavHost(navController, "Home") {
                         composable("Home") {
                             bottomAppBar = defaultBottomBar
+                            topAppBar = {}
 
                             leadBoardColor = colors.onPrimary
                             homeColor = colors.secondary
@@ -87,6 +116,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("Profile") {
                             bottomAppBar = defaultBottomBar
+                            topAppBar = {}
 
                             leadBoardColor = colors.onPrimary
                             homeColor = colors.onPrimary
@@ -95,6 +125,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("LeadBoard") {
                             bottomAppBar = defaultBottomBar
+                            topAppBar = {}
 
                             leadBoardColor = colors.secondary
                             homeColor = colors.onPrimary
@@ -103,8 +134,21 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("SearchGame") {
                             bottomAppBar = {}
+                            topAppBar = backTopAppBar
 
                             SearchGame(navController)
+                        }
+                        composable("FriendlyOnlineGame") {
+                            bottomAppBar = {}
+                            topAppBar = backTopAppBar
+
+                            CreateOrJoinGame()
+                        }
+                        composable("GameScreen") {
+                            bottomAppBar = {}
+                            topAppBar = backTopAppBar
+
+                            GameScreen()
                         }
                     }
                 }
@@ -136,7 +180,7 @@ fun BottomAppBar(
     homeColor: Color,
     profileColor: Color
 ) {
-    Row {
+    Row(horizontalArrangement = Arrangement.Absolute.Left) {
         Box(modifier = Modifier
             .weight(1f)
             .background(MaterialTheme.colorScheme.primary)
