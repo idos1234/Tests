@@ -1,4 +1,4 @@
-package com.example.tests.ui.screens
+package com.example.tests.ui.screens.Menu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

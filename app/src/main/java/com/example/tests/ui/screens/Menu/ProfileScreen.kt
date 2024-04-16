@@ -1,4 +1,4 @@
-package com.example.tests.ui.screens
+package com.example.tests.ui.screens.Menu
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,12 +32,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -231,15 +232,14 @@ fun ProfileScreen() {
                 Column(Modifier.fillMaxWidth()) {
                     //progress line
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                        LinearProgressIndicator(
+                        CustomLinearProgressIndicator(
+                            progress = progress,
+                            progressColor = colors.secondary,
+                            backgroundColor = Color.DarkGray,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(15.dp)
-                                .clip(RoundedCornerShape(20.dp)),
-                            color = colors.secondary,
-                            trackColor = Color.DarkGray,
-                            progress = { progress },
-                            strokeCap = StrokeCap.Round,
+                                .height(15.dp),
+                            clipShape = RoundedCornerShape(20.dp)
                         )
                         Text(
                             text = "Level: $level",
@@ -250,14 +250,14 @@ fun ProfileScreen() {
                     }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End,
+                        horizontalArrangement = Arrangement.Absolute.Left,
                         ) {
                         //stars from this level
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth(0.95f)
                                 .weight(1f),
-                            contentAlignment = Alignment.CenterStart
+                            contentAlignment = AbsoluteAlignment.CenterLeft
                         ) {
                             Row(
                                 horizontalArrangement = Arrangement.Absolute.Left
@@ -279,7 +279,7 @@ fun ProfileScreen() {
                             modifier = Modifier
                                 .fillMaxWidth(0.95f)
                                 .weight(1f),
-                            contentAlignment = Alignment.CenterEnd
+                            contentAlignment = AbsoluteAlignment.CenterRight
                         ) {
                             Row(
                                 horizontalArrangement = Arrangement.Absolute.Left
@@ -481,5 +481,29 @@ fun ShowGame(modifier: Modifier, game: Game, colorScheme: ColorScheme, name: Str
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
+    }
+}
+
+@Composable
+fun CustomLinearProgressIndicator(
+    modifier: Modifier = Modifier,
+    progress: Float,
+    progressColor: Color,
+    backgroundColor: Color,
+    clipShape: RoundedCornerShape = RoundedCornerShape(16.dp)
+) {
+    Box(
+        modifier = modifier
+            .clip(clipShape)
+            .background(backgroundColor)
+            .height(8.dp),
+        contentAlignment = AbsoluteAlignment.CenterLeft
+    ) {
+        Box(
+            modifier = Modifier
+                .background(progressColor)
+                .fillMaxHeight()
+                .fillMaxWidth(progress)
+        )
     }
 }
