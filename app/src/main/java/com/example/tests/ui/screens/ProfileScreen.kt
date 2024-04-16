@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import com.example.tests.R
 import com.example.tests.data.Game
 
-@Preview(locale = "en")
+@Preview
 @Composable
 fun ProfileScreen() {
     val scoreFromCurrentLevel = 0

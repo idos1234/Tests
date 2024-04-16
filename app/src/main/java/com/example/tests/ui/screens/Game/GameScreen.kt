@@ -3,12 +3,14 @@ package com.example.tests.ui.screens.Game
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -97,89 +99,102 @@ private fun GameGrid(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ShowPlayersBar(modifier: Modifier, colors: ColorScheme, screenWidth: Int) {
-    Box(
-        modifier = modifier
-            .fillMaxSize(0.9f),
-        contentAlignment = Alignment.Center
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Absolute.Left,
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxSize()
+                .weight(1f)
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.Right
         ) {
             Column(
-                modifier = Modifier.weight(1f),
+                Modifier.weight(3f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Card(
-                    shape = RoundedCornerShape(20),
+                    border = BorderStroke(5.dp, colors.tertiary),
                     modifier = Modifier
-                        .background(Color.Transparent),
-                    colors = CardDefaults.cardColors(containerColor = colors.primary)
+                        .size(((screenWidth - 40) / 4).dp),
+                    shape = CircleShape
                 ) {
-                    Column(
+                    Image(
+                        painter = painterResource(id = R.drawable.xo_2),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .padding(5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.xo_2),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size((screenWidth * 0.9 / 3 - 15).dp)
-                                .padding(5.dp)
-                                .clip(CircleShape)
-                        )
-                        Text("Player1", fontSize = 20.sp)
-                        Text("Score: 1", fontSize = 20.sp, modifier = Modifier.padding(5.dp))
-                    }
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
                 }
-
+                Text(
+                    text = "Player 1",
+                    fontSize = screenWidth.sp*0.05
+                )
             }
-            Text(
-                text = "VS",
-                textAlign = TextAlign.Center,
-                color = colors.onBackground,
-                fontSize = 30.sp,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            )
+            Card(
+                colors = CardDefaults.cardColors(containerColor = colors.primary),
+                modifier = Modifier.height(((screenWidth - 40) / 3 / 3).dp).weight(2f)
+            ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "Score: 1",
+                        fontSize = screenWidth.sp * 0.04
+                    )
+                }
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.Left
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = colors.primary),
+                modifier = Modifier.height(((screenWidth - 40) / 3 / 3).dp).weight(2f)
+            ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "Score: 1",
+                        fontSize = screenWidth.sp * 0.04
+                    )
+                }
+            }
             Column(
-                modifier = Modifier.weight(1f),
+                Modifier.weight(3f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Card(
-                    shape = RoundedCornerShape(20),
+                    border = BorderStroke(5.dp, colors.tertiary),
                     modifier = Modifier
-                        .background(Color.Transparent)
-                        .padding(5.dp),
-                    colors = CardDefaults.cardColors(containerColor = colors.primary)
+                        .size(((screenWidth - 40) / 4).dp),
+                    shape = CircleShape
                 ) {
-                    Column(
+                    Image(
+                        painter = painterResource(id = R.drawable.xo_2),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .padding(5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.xo_2),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size((screenWidth * 0.9 / 3 -15).dp)
-                                .clip(CircleShape)
-                        )
-                        Text("Player2", fontSize = 20.sp)
-                        Text("Score: 1", fontSize = 20.sp, modifier = Modifier.padding(5.dp))
-                    }
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
                 }
+                Text(
+                    text = "Player 2",
+                    fontSize = screenWidth.sp*0.05
+                )
             }
         }
     }
 }
 
-@Preview(showSystemUi = false)
+@Preview(showSystemUi = true, device = "spec:width=1080px,height=2340px,dpi=640")
 @Composable
 fun GameScreen() {
     val configuration = LocalConfiguration.current
@@ -195,7 +210,7 @@ fun GameScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ShowPlayersBar(
-            modifier = Modifier.weight(3f),
+            modifier = Modifier.weight(2f),
             colors = colors,
             screenWidth = screenWidth
         )

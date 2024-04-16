@@ -35,7 +35,7 @@ import androidx.navigation.NavHostController
 import com.example.tests.R
 
 
-@Preview
+@Preview(device = "spec:width=1080px,height=2340px,dpi=640")
 @Composable
 fun SearchGame(navController: NavHostController = NavHostController(LocalContext.current)) {
     BackHandler {

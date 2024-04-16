@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -34,12 +36,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tests.data.Player
 
-@Preview
+@Preview(device = "spec:width=1080px,height=2340px,dpi=640")
 @Composable
 fun LeadBoardScreen() {
     val configuration = LocalConfiguration.current
 
     val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
 
     val colors = MaterialTheme.colorScheme
     val brush = Brush.verticalGradient(listOf(colors.background, colors.primary))
@@ -95,7 +98,8 @@ fun LeadBoardScreen() {
                                 .align(Alignment.CenterHorizontally),
                             index + 1,
                             colors,
-                            screenHeight
+                            screenHeight,
+                            screenWidth
                         )
                     }
                 }
@@ -106,7 +110,7 @@ fun LeadBoardScreen() {
 }
 
 @Composable
-fun ShowPlayer(player: Player, modifier: Modifier, index: Int, colorScheme: ColorScheme, screenHeight: Dp) {
+fun ShowPlayer(player: Player, modifier: Modifier, index: Int, colorScheme: ColorScheme, screenHeight: Dp, screenWidth: Dp) {
     val color = if(index == 1) {
         Color(0xFFFFC400)
     } else {
@@ -146,12 +150,13 @@ fun ShowPlayer(player: Player, modifier: Modifier, index: Int, colorScheme: Colo
                     )
                     Image(
                         imageVector = Icons.Default.AccountCircle,
-                        contentDescription = "Image"
+                        contentDescription = "Image",
+                        modifier = Modifier.size(((screenWidth.value*0.8-60)/6/2).dp)
                     )
                 }
             }
             Box(
-                modifier = Modifier.weight(4f),
+                modifier = Modifier.wrapContentSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
