@@ -14,17 +14,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -39,12 +42,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -59,6 +64,7 @@ import com.example.tests.ui.screens.Menu.CustomLinearProgressIndicator
 import com.example.tests.ui.screens.Menu.HomeScreen
 import com.example.tests.ui.screens.Menu.LeadBoardScreen
 import com.example.tests.ui.screens.Menu.ProfileScreen
+import com.example.tests.ui.screens.Shop.ShopScreen
 import com.example.tests.ui.theme.TestsTheme
 
 
@@ -82,12 +88,17 @@ class MainActivity : ComponentActivity() {
                 var profileColor by remember {
                     mutableStateOf( colors.onPrimary )
                 }
+                var storeColor by remember {
+                    mutableStateOf( colors.onPrimary )
+                }
+
                 val defaultBottomBar: @Composable () -> Unit = {
                     BottomAppBar(
                         navController,
                         leadBoardColor,
                         homeColor,
-                        profileColor
+                        profileColor,
+                        storeColor
                     )
                 }
                 val backTopAppBar = @Composable {
@@ -130,6 +141,8 @@ class MainActivity : ComponentActivity() {
                             leadBoardColor = colors.onPrimary
                             homeColor = colors.secondary
                             profileColor = colors.onPrimary
+                            storeColor = colors.onPrimary
+
                             HomeScreen(navController)
 
                         }
@@ -140,6 +153,8 @@ class MainActivity : ComponentActivity() {
                             leadBoardColor = colors.onPrimary
                             homeColor = colors.onPrimary
                             profileColor = colors.secondary
+                            storeColor = colors.onPrimary
+
                             ProfileScreen()
                         }
                         composable("LeadBoard") {
@@ -149,7 +164,20 @@ class MainActivity : ComponentActivity() {
                             leadBoardColor = colors.secondary
                             homeColor = colors.onPrimary
                             profileColor = colors.onPrimary
+                            storeColor = colors.onPrimary
+
                             LeadBoardScreen()
+                        }
+                        composable("Store") {
+                            bottomAppBar = defaultBottomBar
+                            topAppBar = defaultTopBar
+
+                            leadBoardColor = colors.onPrimary
+                            homeColor = colors.onPrimary
+                            profileColor = colors.onPrimary
+                            storeColor = colors.secondary
+
+                            ShopScreen()
                         }
                         composable("SearchGame") {
                             bottomAppBar = {}
@@ -201,8 +229,8 @@ fun TopAppBar() {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(10.dp)
-            .fillMaxHeight(0.03f)
+            .padding(5.dp)
+            .fillMaxHeight(0.05f)
             .background(Color.Transparent),
         horizontalArrangement = Arrangement.Absolute.Left,
         verticalAlignment = Alignment.CenterVertically
@@ -215,20 +243,22 @@ fun TopAppBar() {
             horizontalArrangement = Arrangement.Absolute.Left
         ) {
             Box(
-                modifier = Modifier.weight(1f).size(screenHeight.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1.5f),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.Star,
+                    imageVector = Icons.Rounded.Star,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.fillMaxSize()
+                    Modifier.fillMaxSize(),
+                    tint = colors.onPrimary
                 )
                 Text(
-                    text = "8",
+                    text = "23",
                     color = Color.Black,
-                    fontSize = screenHeight.sp*0.01,
-                    fontWeight = FontWeight.SemiBold,
+                    fontSize = screenHeight.sp * 0.01,
+                    fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Center
                 )
             }
@@ -238,9 +268,9 @@ fun TopAppBar() {
             ) {
                 CustomLinearProgressIndicator(
                     modifier = Modifier
-                        .fillMaxSize(0.9f)
+                        .fillMaxSize()
                         .align(AbsoluteAlignment.CenterLeft),
-                    clipShape = RoundedCornerShape(20.dp),
+                    clipShape = RoundedCornerShape(10),
                     progressColor = colors.secondary,
                     backgroundColor = Color.DarkGray,
                     progress = 0.4f
@@ -252,6 +282,7 @@ fun TopAppBar() {
                     fontSize = screenHeight.sp*0.02
                     )
             }
+            Spacer(modifier = Modifier.weight(0.5f))
         }
 
         Row(
@@ -262,7 +293,7 @@ fun TopAppBar() {
             horizontalArrangement = Arrangement.Absolute.Left
         ) {
             Card(
-                colors = CardDefaults.cardColors(containerColor = Color.Green),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF019C51)),
                 shape = RoundedCornerShape(20),
                 modifier = Modifier.weight(1f)
             ) {
@@ -275,7 +306,8 @@ fun TopAppBar() {
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
-                        fontSize = screenHeight.sp*0.02
+                        fontSize = screenHeight.sp*0.02,
+                        modifier = Modifier.shadow(10.dp, CircleShape)
                         )
                 }
             }
@@ -323,9 +355,26 @@ fun BottomAppBar(
     navController: NavController,
     leadBoardColor: Color,
     homeColor: Color,
-    profileColor: Color
+    profileColor: Color,
+    storeColor: Color
 ) {
     Row(horizontalArrangement = Arrangement.Absolute.Left) {
+        Box(modifier = Modifier
+            .weight(1f)
+            .background(MaterialTheme.colorScheme.primary)
+            .clickable(
+                onClick = {
+                    navController.navigate("Store")
+                }
+            ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.store),
+                contentDescription = "Store",
+                tint = storeColor
+            )
+        }
         Box(modifier = Modifier
             .weight(1f)
             .background(MaterialTheme.colorScheme.primary)

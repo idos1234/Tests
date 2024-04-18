@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-@Preview(showSystemUi = true, device = "spec:width=1080px,height=2340px,dpi=640")
+@Preview()
 @Composable
 fun HomeScreen(navController: NavController = NavController(LocalContext.current)) {
     val configuration = LocalConfiguration.current
@@ -113,7 +113,7 @@ fun HomeScreen(navController: NavController = NavController(LocalContext.current
 
                 //online game button
                 Button(
-                    onClick = {navController.navigate("SearchGame")},
+                    onClick = {navController.navigate("FriendlyOnlineGame")},
                     modifier = Modifier
                         .wrapContentSize()
                         .fillMaxWidth(0.7f),

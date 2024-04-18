@@ -62,6 +62,7 @@ fun ProfileScreen() {
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
+    val screenHeight = configuration.screenHeightDp
 
     val level = 1
     val name = "Ido"
@@ -111,6 +112,9 @@ fun ProfileScreen() {
             .fillMaxSize()
             .background(brush = brush)
     ) {
+        item {
+            Spacer(modifier = Modifier.height((screenHeight/10).dp))
+        }
         item {
             //player's data - name, image, wins, loses
             Card(
