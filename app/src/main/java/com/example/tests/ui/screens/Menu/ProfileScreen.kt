@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -143,12 +142,12 @@ fun ProfileScreen() {
                             contentAlignment = Alignment.BottomEnd
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.xo_1),
+                                painter = painterResource(id = R.drawable.xo1),
                                 contentDescription = "Player's image",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .clip(CircleShape)
+                                    .clip(RoundedCornerShape(20))
                             )
                             Icon(
                                 imageVector = Icons.Default.Edit,
@@ -169,12 +168,12 @@ fun ProfileScreen() {
                             Card(modifier = Modifier
                                 .weight(1f)
                                 .padding(horizontal = 2.5.dp),
-                                shape = CircleShape,
+                                shape = RoundedCornerShape(20),
                                 elevation = CardDefaults.cardElevation(8.dp),
                                 colors = CardDefaults.cardColors(containerColor = colors.onPrimary)
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.x_1),
+                                    painter = painterResource(id = R.drawable.x1),
                                     contentDescription = "Player's image",
                                     modifier = Modifier.fillMaxSize()
                                 )
@@ -183,12 +182,12 @@ fun ProfileScreen() {
                             Card(modifier = Modifier
                                 .weight(1f)
                                 .padding(horizontal = 2.5.dp),
-                                shape = CircleShape,
+                                shape = RoundedCornerShape(20),
                                 elevation = CardDefaults.cardElevation(8.dp),
                                 colors = CardDefaults.cardColors(containerColor = colors.onPrimary)
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.o_1),
+                                    painter = painterResource(id = R.drawable.o1),
                                     contentDescription = "Player's image",
                                     modifier = Modifier.fillMaxSize()
                                 )

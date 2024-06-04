@@ -3,10 +3,10 @@ package com.example.tests.ui.screens.Shop
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,12 +26,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -42,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tests.R
+import com.example.tests.data.images
 
 @Preview(showSystemUi = true, device = "spec:width=1080px,height=2340px,dpi=640")
 @Composable
@@ -78,7 +76,9 @@ fun ShopScreen() {
         item {
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()                .height((screenHeight / 3).dp)
+                .wrapContentHeight()
+                .height(screenWidth.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     Modifier
@@ -88,14 +88,16 @@ fun ShopScreen() {
                     horizontalArrangement = Arrangement.Absolute.Left
                 ) {
                     ShowDeal(
-                        image = R.drawable.xo_2,
+                        image = images[2].image,
+                        name = images[2].name,
                         price = 2000,
                         colors = colors,
                         screenWidth = screenWidth,
                         screenHeight = screenHeight
                     )
                     ShowDeal(
-                        image = R.drawable.xo_10_1,
+                        image = images[14].x,
+                        name = images[14].name,
                         price = 5000,
                         colors = colors,
                         screenWidth = screenWidth,
@@ -155,7 +157,8 @@ fun ShopScreen() {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .height((screenHeight / 3).dp)
+                .height(screenWidth.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     Modifier
@@ -234,26 +237,30 @@ fun ShowCoins(
         modifier = Modifier
             .padding(5.dp)
             .width((screenWidth / 3 - 15).dp)
-            .wrapContentHeight()
+            .fillMaxHeight()
+            .fillMaxHeight(0.8f)
     ) {
         Column(
             Modifier
-                .wrapContentSize()
+                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Card(
                 modifier = Modifier
-                    .wrapContentHeight()
+                    .size((screenWidth / 4).dp)
                     .padding(horizontal = 5.dp),
-                colors = CardDefaults.cardColors(colors.onPrimary)
+                colors = CardDefaults.cardColors(colors.onPrimary),
+                shape = RoundedCornerShape(30)
             ) {
                 Column(
                     Modifier
-                        .wrapContentHeight()
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(5.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = coins.toString(),
@@ -267,7 +274,7 @@ fun ShowCoins(
                         painter = painterResource(id = R.drawable.coin),
                         contentDescription = null,
                         Modifier
-                            .fillMaxSize(0.6f)
+
                     )
                 }
             }
@@ -292,13 +299,12 @@ fun ShowUnderLevel(colors: ColorScheme, screenWidth: Int, screenHeight: Int, lev
         modifier = Modifier
             .padding(5.dp)
             .width((screenWidth / 3 - 15).dp)
-            .wrapContentHeight()
+            .fillMaxSize()
     ) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(10.dp)
-                .fillMaxWidth(),
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
 
@@ -323,45 +329,47 @@ fun ShowUnderLevel(colors: ColorScheme, screenWidth: Int, screenHeight: Int, lev
 
 
 @Composable
-fun ShowDeal(image: Int, price: Int, colors: ColorScheme, screenWidth: Int, screenHeight: Int) {
+fun ShowDeal(image: Int, name: String, price: Int, colors: ColorScheme, screenWidth: Int, screenHeight: Int) {
     Card(
         shape = RoundedCornerShape(10),
         colors = CardDefaults.cardColors(colors.primary),
         modifier = Modifier
             .padding(5.dp)
             .width((screenWidth / 3 - 15).dp)
-            .wrapContentHeight()
+            .fillMaxSize()
     ) {
         Column(
             Modifier
-                .wrapContentSize()
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Image(
                 painter = painterResource(id = image),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .clip(CircleShape)
+                    .clip(RoundedCornerShape(20))
                     .size(((screenWidth / 3 - 30) / 5 * 3).dp)
             )
-
+            Text(
+                text = name,
+                color = colors.onPrimary,
+                textAlign = TextAlign.Right,
+                fontWeight = FontWeight.Bold,
+                fontSize = screenHeight.sp*0.01,
+            )
             Text(
                 text = price.toString(),
                 color = colors.onPrimary,
                 textAlign = TextAlign.Right,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f),
                 fontSize = screenHeight.sp*0.025,
             )
             Image(
                 painter = painterResource(id = R.drawable.coin),
-                contentDescription = null,
-                Modifier
-                    .fillMaxSize(0.6f)
-                    .weight(1f)
+                contentDescription = null
             )
         }
     }

@@ -29,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +52,7 @@ private fun GameButton(modifier: Modifier = Modifier) {
         colors = CardDefaults.cardColors(containerColor = colors.primary)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.x_1),
+            painter = painterResource(id = R.drawable.x1),
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
@@ -122,7 +121,7 @@ private fun ShowPlayersBar(modifier: Modifier, colors: ColorScheme, screenWidth:
                     shape = CircleShape
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.xo_2),
+                        painter = painterResource(id = R.drawable.xo2),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -177,7 +176,7 @@ private fun ShowPlayersBar(modifier: Modifier, colors: ColorScheme, screenWidth:
                     shape = CircleShape
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.xo_2),
+                        painter = painterResource(id = R.drawable.xo2),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
