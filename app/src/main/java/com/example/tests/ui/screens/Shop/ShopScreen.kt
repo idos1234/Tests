@@ -77,7 +77,7 @@ fun ShopScreen() {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .height(screenWidth.dp),
+                .height((screenWidth*0.8).dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -157,7 +157,7 @@ fun ShopScreen() {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .height(screenWidth.dp),
+                .height((screenWidth*0.8).dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
