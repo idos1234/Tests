@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -34,13 +35,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.colorspace.ColorSpace
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -185,6 +190,21 @@ fun TicTacToeApp() {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
+@Composable
+fun s() {
+    val colors = MaterialTheme.colorScheme
+    val brush = Brush.verticalGradient(listOf(colors.background, colors.primary))
+
+    Scaffold(
+        topBar = { TopAppBar() }
+    ){
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(brush))
+    }
+}
 
 @Composable
 fun TopAppBar() {
@@ -195,124 +215,77 @@ fun TopAppBar() {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(5.dp)
-            .fillMaxHeight(0.05f)
-            .background(Color.Transparent),
+            .background(Color.Transparent)
+            .padding(top = (screenHeight * 5 / 915).dp),
         horizontalArrangement = Arrangement.Absolute.Left,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.Left
+        Spacer(modifier = Modifier.weight(1f))
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(2f)) {
+            CustomLinearProgressIndicator(
+                progress = 0.7f,
+                progressColor = colors.secondary,
+                backgroundColor = Color.DarkGray,
+                clipShape = CircleShape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height((screenHeight * 20 / 915).dp)
+
+            )
+            Text(
+                text = "Level: 14",
+                color = Color.White,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Box(
+            modifier = Modifier.weight(2f).clip(RoundedCornerShape(50)),
+            contentAlignment = AbsoluteAlignment.CenterLeft
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1.5f),
-                contentAlignment = Alignment.Center
+                    .height((screenHeight * 20 / 915).dp),
+                contentAlignment = AbsoluteAlignment.CenterRight
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.Star,
-                    contentDescription = null,
-                    Modifier.fillMaxSize(),
-                    tint = colors.onPrimary
-                )
-                Text(
-                    text = "23",
-                    color = Color.Black,
-                    fontSize = screenHeight.sp * 0.01,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Center
-                )
-            }
-            Box(
-                modifier = Modifier.weight(4f),
-                contentAlignment = Alignment.Center
-            ) {
-                CustomLinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .align(AbsoluteAlignment.CenterLeft),
-                    clipShape = RoundedCornerShape(10),
-                    progressColor = colors.secondary,
-                    backgroundColor = Color.DarkGray,
-                    progress = 0.4f
-                )
-                Text(
-                    text = "650/2003",
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = screenHeight.sp*0.02
-                )
-            }
-            Spacer(modifier = Modifier.weight(0.5f))
-        }
-
-        Row(
-            Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.Left
-        ) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF019C51)),
-                shape = RoundedCornerShape(20),
-                modifier = Modifier.weight(1f)
-            ) {
-                Box(
+                Card(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    colors = CardDefaults.cardColors(colors.secondary),
+                    shape = RoundedCornerShape(20)
+                ) {
+                    Text(
+                        text = "100,000",
+                        textAlign = TextAlign.Center,
+                        color = colors.onSecondary,
+                        fontSize = 15.sp,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Card(
+                    modifier = Modifier
+                        .size((screenHeight * 15 / 915).dp),
+                    colors = CardDefaults.cardColors(Color.Green.copy(alpha = 0.6f)),
+                    shape = CircleShape
                 ) {
                     Text(
                         text = "+",
-                        color = Color.White,
                         textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = screenHeight.sp*0.02,
-                        modifier = Modifier.shadow(10.dp, CircleShape)
+                        color = Color.White,
+                        fontSize = 12.sp,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
+
             }
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color.DarkGray.copy(0.6f)),
-                shape = RectangleShape,
-                modifier = Modifier
-                    .weight(4f)
-                    .fillMaxSize()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Absolute.Left,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            text = "2000",
-                            color = Color.White,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(3f),
-                            fontSize = screenHeight.sp*0.02,
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.coin),
-                            contentDescription = null,
-                            Modifier
-                                .size(screenHeight.dp)
-                                .weight(1f)
-                        )
-                    }
-                }
-            }
+            Image(
+                painter = painterResource(id = R.drawable.coin),
+                contentDescription = "coin",
+                Modifier
+                    .size((screenHeight * 20 / 915).dp)
+            )
         }
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

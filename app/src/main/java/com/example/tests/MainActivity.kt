@@ -8,9 +8,37 @@ import android.os.IBinder
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.tests.ui.screens.ChooseNameScreen
+import com.example.tests.ui.screens.GoogleSignInScreen
+import com.example.tests.ui.screens.SignInBackGround
 import com.example.tests.ui.screens.TicTacToeApp
 import com.example.tests.ui.theme.TestsTheme
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +50,9 @@ class MainActivity : ComponentActivity() {
             TestsTheme {
                 startService(Intent(baseContext, ClearService::class.java))
 
-                TicTacToeApp()
+                GoogleSignInScreen()
+
+                //TicTacToeApp()
             }
         }
     }
